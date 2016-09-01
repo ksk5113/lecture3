@@ -2,10 +2,16 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'  
   get 'home/index'
+  
   post 'home/write' => 'home#write'
   get 'destroy/:id' => 'home#destroy'
   get 'update/:id' => 'home#update'
-  post '/update_act/:id' => 'home#update_act' 
+  post '/update_act/:id' => 'home#update_act'
+  get '/search' => 'home#search'
+  
+  get ':controller(/:action(/:id))'
+  post ':controller(/:action(/:id))'
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

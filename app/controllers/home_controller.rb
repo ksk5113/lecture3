@@ -1,13 +1,37 @@
 class HomeController < ApplicationController
-
-  def index
+  
+  def search
+  
+  end
+  
+  def search_result
     
-    @every_post = Post.all
+    unless params[:errotic].nil?
+      errotic = true
+    end
+    unless params[:study].nil?
+      study = true
+    end
+    unless params[:relationship].nil?
+      relationship = true
+    end
+    
+      @filtered_post = Post.where("title LIKE ? and (errotic = ? or study = ? or relationship = ?)", 
+      "%#{params[:title]}%", errotic, study, relationship)
     
   end
   
+  def index
+    
+    @every_post = Post.all
+
+  end
+  
   def write
-    post = Post.new(title: params[:title], content: params[:content], user: current_user)
+    post = Post.new(
+      title: params[:title], content: params[:content], user: current_user,
+      errotic: params[:errotic], study: params[:study], relationship: params[:relationship]
+    )
     authorize! :write, Post
     post.save
     
